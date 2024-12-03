@@ -1,0 +1,12 @@
+ python manage.py shell
+>>> from task1.models import Buyer
+>>> from task1.models import Game
+>>> Buyer.objects.create(name='Dema', balance=1500, age=26)
+>>> Buyer.objects.create(name='Pasha', balance=3600, age=48)
+>>> Buyer.objects.create(name='Slava', balance=1000, age=16)
+>>> Game.objects.create(title='Metro', cost=479, size=59, description='Третья игра популярной франшизы предлагает вернуться в постапокалиптические пустоши России и Казахстана.', age_limited=True)
+>>> Game.objects.create(title='art of rally', cost=499, size=8, description='Погрузитесь в «золотой век» захватывающих гонок по бездорожью!')
+>>>  Game.objects.create(title='Detroit', cost=390.50, size=55, description='Захватывающая и эмоционально насыщенная история в мире, где андроиды существуют бок о бок с людьми.', age_limited=True)
+>>> Game.objects.get(id=4).buyer.set((6,))
+>>> Game.objects.get(id=5).buyer.set((6, 7, 8))
+>>> Game.objects.get(id=6).buyer.set((6, 7))

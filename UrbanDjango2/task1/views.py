@@ -43,16 +43,12 @@ def sign_up_by_django(request):
         form = UserRegister(request.POST)
         if form.is_valid():
             username = form.cleaned_data['username']
-            user_balance = form.cleaned_data['user_balance']
+            password = form.cleaned_data['password']
+            password_again = form.cleaned_data['password_again']
             age = form.cleaned_data['age']
-            try:
-                if float(user_balance) <= 0:
-                    info['error'] = 'Баланс должен быть больше 0'
-                    return render(request, 'registration_page.html', info)
-            except ValueError:
-                info['error'] = 'Введите баланс арабскими цифрами'
+            if password != password_again:
+                info['error'] = 'Пароли не совпадают'
                 return render(request, 'registration_page.html', info)
-
             try:
                 if int(age) < 1:
                     info['error'] = 'Возраст введен некорректно'
@@ -63,7 +59,7 @@ def sign_up_by_django(request):
                         if user.name == username:
                             info['error'] = 'Пользователь уже существует'
                             return render(request, 'registration_page.html', info)
-                Buyer.objects.create(name=username, balance=user_balance, age=age)
+                Buyer.objects.create(name=username, password=password, age=age)
                 info['hi'] = f'Приветствуем, {username}!'
             except ValueError:
                 info['error'] = 'Возраст введите арабскими цифрами'
